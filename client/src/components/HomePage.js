@@ -1,10 +1,12 @@
 import React from "react";
-import { Typography, Divider } from "antd";
-
+import { Typography, Divider, Layout, Button } from "antd";
+const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 function HomePage() {
 	return (
-		<div>
+		<Content
+			style={{ padding: "20px 20px", background: "#fff", minHeight: "83vh" }}
+		>
 			<Title>Slow Finance</Title>
 			<Text>
 				Slow finance is an attempt to create DeFi primitives from scratch.{" "}
@@ -14,7 +16,15 @@ function HomePage() {
 				</Text>
 			</Text>
 			<Divider />
-		</div>
+			Link to the repository:{" "}
+			<Button
+				type="primary"
+				href="https://github.com/iamsahu/slowdex"
+				target="_blank"
+			>
+				GitHub Repo
+			</Button>
+		</Content>
 	);
 }
 

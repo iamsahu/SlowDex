@@ -7,8 +7,8 @@ import Web3Context from "../context/Web3Context";
 import DexSwap from "./DexSwap";
 import DexLiquidity from "./DexLiquidity";
 
-import { Tabs, Form, Typography, Input, Button, Checkbox } from "antd";
-
+import { Tabs, Typography, Layout } from "antd";
+const { Content } = Layout;
 const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
@@ -27,7 +27,9 @@ function Dex(props) {
 		}
 	};
 	return (
-		<div>
+		<Content
+			style={{ padding: "20px 20px", background: "#fff", minHeight: "83vh" }}
+		>
 			<Title> DEX</Title>
 			<Tabs defaultActiveKey="1" onChange={callback}>
 				<TabPane tab="Swap Token" key="1">
@@ -37,7 +39,7 @@ function Dex(props) {
 					{selectedTabUI}
 				</TabPane>
 			</Tabs>
-		</div>
+		</Content>
 	);
 }
 

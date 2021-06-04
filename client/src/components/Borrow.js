@@ -4,8 +4,8 @@ import Local2 from "../contracts/Local2.json";
 import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
-import { Button, Form, Input, Typography } from "antd";
-
+import { Button, Form, Input, Typography, Layout } from "antd";
+const { Content } = Layout;
 const { Title } = Typography;
 
 function Borrow(props) {
@@ -105,7 +105,9 @@ function Borrow(props) {
 	};
 
 	return (
-		<div>
+		<Content
+			style={{ padding: "20px 20px", background: "#fff", minHeight: "83vh" }}
+		>
 			<Title> Borrow</Title>
 			You have {accountBalance} ETH
 			<br />
@@ -136,7 +138,7 @@ function Borrow(props) {
 			</Form>
 			<br />
 			{borrowStatus == "" ? "" : "You successfully borrowed!"}
-		</div>
+		</Content>
 	);
 }
 

@@ -6,8 +6,8 @@ import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
 
 import Withdraw from "./Withdraw";
-import { Tabs, Form, Typography, Input, Button, Checkbox } from "antd";
-
+import { Tabs, Form, Layout, Typography, Input, Button } from "antd";
+const { Content } = Layout;
 const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
@@ -76,7 +76,9 @@ function Lend(props) {
 
 	function callback(key) {}
 	return (
-		<div>
+		<Content
+			style={{ padding: "20px 20px", background: "#fff", minHeight: "83vh" }}
+		>
 			<Title> Lending</Title>
 
 			<Tabs defaultActiveKey="1" onChange={callback}>
@@ -106,7 +108,7 @@ function Lend(props) {
 			</Tabs>
 
 			{/* <Button onClick={FundLending}>Lend Tokens to Protocol</Button> */}
-		</div>
+		</Content>
 	);
 }
 

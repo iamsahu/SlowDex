@@ -20,7 +20,7 @@ import {
 } from "@ant-design/icons";
 import { Typography } from "antd";
 
-const { Link } = Typography;
+const { Link, Title } = Typography;
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -225,8 +225,7 @@ function App() {
 				className="header"
 				style={{ position: "fixed", zIndex: 1, width: "100%" }}
 			>
-				<div className="logo" />
-				Slow Finance
+				<Title>Slow Finance</Title>
 			</Header>
 			<Content className="site-layout" style={{ marginTop: 64 }}>
 				<Layout style={{ minHeight: "92vh" }}>
@@ -269,11 +268,7 @@ function App() {
 						</Menu>
 					</Sider>
 					<Layout className="site-layout">
-						<Content style={{ margin: "0 16px" }}>
-							{/* <Breadcrumb style={{ margin: "16px 0" }}>
-						<Breadcrumb.Item>User</Breadcrumb.Item>
-						<Breadcrumb.Item>Bill</Breadcrumb.Item>
-					</Breadcrumb> */}
+						<Content>
 							<Web3Context.Provider value={details}>
 								<div
 									className="site-layout-background"
