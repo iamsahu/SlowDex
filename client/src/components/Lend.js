@@ -82,9 +82,7 @@ function Lend(props) {
 		console.log("Failed:", errorInfo);
 	};
 
-	function callback(key) {
-		console.log(key);
-	}
+	function callback(key) {}
 	return (
 		<div>
 			<Tabs defaultActiveKey="1" onChange={callback}>

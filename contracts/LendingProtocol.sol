@@ -39,6 +39,10 @@ contract LendingProtocol {
         return borrows[msg.sender];
     }
 
+    function MyLent() public returns (uint256) {
+        return amountLent[msg.sender];
+    }
+
     function AcceptTokensToLend(address tokentoborrow, uint256 amount) public {
         ERC20 tokenC = ERC20(tokentoborrow);
         uint256 availableAllowance =

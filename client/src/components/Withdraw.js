@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Local1 from "../contracts/Local1.json";
 import Local2 from "../contracts/Local2.json";
 import SlowDex from "../contracts/SlowDex.json";
@@ -10,6 +10,7 @@ const { Text } = Typography;
 
 function Withdraw(props) {
 	const [withdrawStatus, setwithdrawStatus] = useState("");
+	const [amountLent, setAmountLent] = useState("");
 	const details = useContext(Web3Context);
 	const { accounts, contract, web3 } = details.current;
 
@@ -18,6 +19,14 @@ function Withdraw(props) {
 		LendingProtocol.abi,
 		lendingContract && lendingContract.address
 	);
+
+	useEffect(() => {
+		async function GetLent() {
+			const lent = await lendingInstance.methods.MyLent().call();
+			setAmountLent(web3.utils.fromWei(lent, "ether"));
+		}
+		GetLent();
+	}, []);
 
 	async function Withdraw(withdrawAmount) {
 		// await contract.methods
@@ -68,6 +77,8 @@ function Withdraw(props) {
 	return (
 		<div>
 			<Text>Withdraw your LOC1 token</Text>
+			<br />
+			<Text>Amount lent till now {amountLent}</Text>
 			<br />
 			<Form
 				name="basic"
