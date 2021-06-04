@@ -74,14 +74,6 @@ function Lend(props) {
 		console.log("Failed:", errorInfo);
 	};
 
-	const onWithDraw = async (values) => {
-		await FundLending(values.lendAmount);
-	};
-
-	const onWithDrawFailed = (errorInfo) => {
-		console.log("Failed:", errorInfo);
-	};
-
 	function callback(key) {}
 	return (
 		<div>

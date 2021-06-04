@@ -1,38 +1,54 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
 
+pragma solidity ^0.8.0;
 // import "@uniswap/lib/contract/libraries/TransferHelper.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract SlowDex {
     ERC20 public ERC20Interface;
+    uint256 public loc1Token;
+    uint256 public loc2Token;
+    uint256 public theconstant;
 
-    function InitiateTransfer(address token, uint256 value) external {
-        //Token, from, to, value
-        // TransferHelper.safeTransferFrom(
-        //     token,
-        //     msg.sender,
-        //     address(this),
-        //     value
-        // );
-        (bool success, bytes memory data) =
-            token.call(
-                abi.encodeWithSelector(
-                    0x23b872dd,
-                    msg.sender,
-                    address(this),
-                    value
-                )
-            );
-        require(
-            success && (data.length == 0 || abi.decode(data, (bool))),
-            "TransferHelper::transferFrom: transferFrom failed"
-        );
+    event SuccessfulSwap(address, uint256, address, uint256);
+    event AmountDeposited(uint256, uint256);
+
+    function DepositTokens(
+        address token1_,
+        address token2_,
+        uint256 amount1_,
+        uint256 amount2_
+    ) public {
+        ERC20 token1 = ERC20(token1_);
+        ERC20 token2 = ERC20(token2_);
+        require(token1.allowance(msg.sender, address(this)) >= amount1_);
+        require(token2.allowance(msg.sender, address(this)) >= amount2_);
+        token1.transferFrom(msg.sender, address(this), amount1_);
+        token2.transferFrom(msg.sender, address(this), amount2_);
+        //Add the toke amounts
+        loc1Token += amount1_;
+        loc2Token += amount2_;
+        theconstant = loc1Token * loc2Token;
+        emit AmountDeposited(amount1_, amount2_);
     }
 
-    function transferTokens(address token, uint256 amount_) public {
-        ERC20Interface = ERC20(token);
-        // uint256 allowance = token.allowance(msg.sender, address(this));
-        ERC20Interface.transferFrom(msg.sender, address(this), amount_);
+    function ReturnBalances() public returns (uint256, uint256) {
+        return (loc1Token, loc2Token);
+    }
+
+    function swapToken(
+        address token1,
+        address token2,
+        uint256 amount1,
+        uint256 amount2
+    ) public {
+        ERC20 _token1 = ERC20(token1);
+        ERC20 _token2 = ERC20(token2);
+        require(_token1.allowance(msg.sender, address(this)) >= amount1);
+        _token1.transferFrom(msg.sender, address(this), amount1);
+        _token2.transfer(msg.sender, amount2);
+        loc1Token += amount1;
+        loc2Token -= amount2;
+        emit SuccessfulSwap(token1, amount1, token2, amount2);
     }
 }

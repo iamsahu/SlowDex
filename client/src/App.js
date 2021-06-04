@@ -8,6 +8,7 @@ import getWeb3 from "./getWeb3";
 import Lend from "./components/Lend";
 import Borrow from "./components/Borrow";
 import HomePage from "./components/HomePage";
+import Dex from "./components/Dex";
 import Web3Context from "./context/Web3Context";
 import "./App.css";
 
@@ -266,7 +267,7 @@ function App() {
 		// console.log(item);
 		switch (item.key) {
 			case "1":
-				setcurrentUI("Dex");
+				setcurrentUI(<Dex />);
 				break;
 			case "3":
 				setcurrentUI(<Lend />);
