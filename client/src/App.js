@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from "react";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import Local1 from "./contracts/Local1.json";
+import Local2 from "./contracts/Local2.json";
 import SlowDex from "./contracts/SlowDex.json";
+import LendingProtocol from "./contracts/LendingProtocol.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
@@ -90,6 +92,181 @@ function App() {
 		// 	.send({ from: accounts[0], gas: 4712388, gasPrice: 100000000000 });
 	}
 
+	async function FundLending() {
+		const { accounts, contract, web3 } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+
+		await contract.methods
+			.transfer(
+				lendingContract.address,
+				details.current.web3.utils.toWei("50", "ether")
+			)
+			.send({ from: accounts[0], gas: 210000, gasPrice: 1000000000 });
+		// const a = await contract.methods
+		// 	.balanceOf(lendingContract.address)
+		// 	.send({ from: accounts[0], gas: 21000, gasPrice: 1000000000 });
+		// console.log(a);
+	}
+
+	async function GetBalanceOf() {
+		const { accounts, contract, web3 } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+
+		const res = await contract.methods
+			.balanceOf(lendingContract.address)
+			.call();
+
+		console.log(res);
+		console.log(lendingContract.address);
+	}
+
+	async function GetBalanceC() {
+		const { web3 } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+
+		// const instance = new web3.eth.Contract(
+		// 	LendingProtocol.abi,
+		// 	lendingContract && lendingContract.address
+		// );
+		// const res = await instance.methods.balance().call();
+
+		// console.log(res);
+		// console.log(lendingContract.address);
+
+		await web3.eth.getBalance(lendingContract.address).then(console.log);
+	}
+
+	async function GiveMe() {
+		const { web3, accounts } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+
+		const instance = new web3.eth.Contract(
+			LendingProtocol.abi,
+			lendingContract && lendingContract.address
+		);
+		try {
+			await instance.methods
+				.LoanMe(
+					Local1.networks[networkId].address,
+					web3.utils.toWei("0.05", "ether")
+				)
+				.send({
+					from: accounts[0],
+					value: web3.utils.toWei("0.5", "ether"),
+					gas: 210000,
+					gasPrice: 1000000000,
+				})
+				.on("error", function (error, receipt) {
+					// If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+					console.log(error);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async function DepositPair() {
+		const { web3, accounts } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+		const local1Contract = Local1.networks[networkId];
+		const local2Contract = Local2.networks[networkId];
+		const local1instance = new web3.eth.Contract(
+			Local1.abi,
+			local1Contract && local1Contract.address
+		);
+
+		const local2instance = new web3.eth.Contract(
+			Local2.abi,
+			local2Contract && local2Contract.address
+		);
+
+		const lendingInstance = new web3.eth.Contract(
+			LendingProtocol.abi,
+			lendingContract && lendingContract.address
+		);
+
+		const depAm1 = web3.utils.toWei("0.03", "ether");
+		const depAm2 = web3.utils.toWei("0.01", "ether");
+
+		try {
+			await local1instance.methods
+				.approve(lendingContract.address, depAm1)
+				.send({
+					from: accounts[0],
+					// value: web3.utils.toWei("0.5", "ether"),
+					gas: 210000,
+					gasPrice: 1000000000,
+				});
+
+			await local2instance.methods
+				.approve(lendingContract.address, depAm2)
+				.send({
+					from: accounts[0],
+					// value: web3.utils.toWei("0.5", "ether"),
+					gas: 210000,
+					gasPrice: 1000000000,
+				});
+
+			await lendingInstance.methods
+				.DepositTokens(
+					Local1.networks[networkId].address,
+					Local2.networks[networkId].address,
+					depAm1,
+					depAm2
+				)
+				.send({
+					from: accounts[0],
+					// value: web3.utils.toWei("0.5", "ether"),
+					gas: 210000,
+					gasPrice: 1000000000,
+				})
+				.on("error", function (error, receipt) {
+					// If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+					console.log(error);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async function GetBalanceToken() {
+		const { web3 } = details.current;
+		const networkId = await web3.eth.net.getId();
+		const lendingContract = LendingProtocol.networks[networkId];
+		const local1Contract = Local1.networks[networkId];
+		const local2Contract = Local2.networks[networkId];
+
+		const local1instance = new web3.eth.Contract(
+			Local1.abi,
+			local1Contract && local1Contract.address
+		);
+
+		const local2instance = new web3.eth.Contract(
+			Local2.abi,
+			local2Contract && local2Contract.address
+		);
+		await local1instance.methods
+			.balanceOf(lendingContract.address)
+			.call()
+			.then(console.log);
+		await local2instance.methods
+			.balanceOf(lendingContract.address)
+			.call()
+			.then(console.log);
+		// await web3.eth.getBalance(lendingContract.address).then(console.log);
+	}
+
 	return (
 		<div className="App">
 			<h1>Good to Go!</h1>
@@ -105,6 +282,12 @@ function App() {
 
 			<button onClick={runExample}>Transfer Loc1</button>
 			<button onClick={runExample2}>DEX Transfer</button>
+			<button onClick={FundLending}>Fund Lending</button>
+			<button onClick={GiveMe}>Give Me</button>
+			<button onClick={GetBalanceOf}>GetBalanceOf</button>
+			<button onClick={GetBalanceC}>GetBalanceC</button>
+			<button onClick={DepositPair}>DepositPair</button>
+			<button onClick={GetBalanceToken}>GetBalanceToken</button>
 		</div>
 	);
 }

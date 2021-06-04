@@ -33,7 +33,6 @@ contract SlowDex {
     function transferTokens(address token, uint256 amount_) public {
         ERC20Interface = ERC20(token);
         // uint256 allowance = token.allowance(msg.sender, address(this));
-
         ERC20Interface.transferFrom(msg.sender, address(this), amount_);
     }
 }
