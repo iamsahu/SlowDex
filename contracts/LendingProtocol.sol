@@ -39,14 +39,21 @@ contract LendingProtocol {
         return borrows[msg.sender];
     }
 
-    function AcceptTokensToLend(address token, uint256 amount) public {
-        ERC20 tokenC = ERC20(token);
+    function AcceptTokensToLend(address tokentoborrow, uint256 amount) public {
+        ERC20 tokenC = ERC20(tokentoborrow);
         uint256 availableAllowance =
             tokenC.allowance(msg.sender, address(this));
-        requires(availableAllowance >= amount, "Not enough allowance!");
+        require(availableAllowance >= amount, "Not enough allowance!");
         tokenC.transferFrom(msg.sender, address(this), amount);
         amountToLend += amount;
         amountLent[msg.sender] += amount;
+    }
+
+    function withDraw(address tokenToWithDraw, uint256 amount) public {
+        require(amountLent[msg.sender] >= amount);
+        ERC20 tokenC = ERC20(tokenToWithDraw);
+        tokenC.transfer(msg.sender, amount);
+        amountLent[msg.sender] -= amount;
     }
 
     function DepositTokens(

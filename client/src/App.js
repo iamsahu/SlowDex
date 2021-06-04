@@ -263,7 +263,7 @@ function App() {
 	}
 
 	function onItemClick(item) {
-		console.log(item);
+		// console.log(item);
 		switch (item.key) {
 			case "1":
 				setcurrentUI("Dex");

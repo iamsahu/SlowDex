@@ -27,8 +27,8 @@ function Borrow(props) {
 			setAccountBalance(web3.utils.fromWei(res, "ether"));
 			setMaxBorrow(web3.utils.fromWei(res, "ether") / 2);
 
-			console.log(details);
-			console.log(lendingContract);
+			// console.log(details);
+			// console.log(lendingContract);
 			let bal = await lendingInstance.methods.MyDeposits().call();
 			let bal2 = await lendingInstance.methods.MyBorrows().call();
 
