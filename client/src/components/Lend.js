@@ -8,7 +8,7 @@ import Web3Context from "../context/Web3Context";
 import Withdraw from "./Withdraw";
 import { Tabs, Form, Typography, Input, Button, Checkbox } from "antd";
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
 function Lend(props) {
@@ -77,6 +77,8 @@ function Lend(props) {
 	function callback(key) {}
 	return (
 		<div>
+			<Title> Lending</Title>
+
 			<Tabs defaultActiveKey="1" onChange={callback}>
 				<TabPane tab="Lendtokens" key="1">
 					<Text>You can lend your LOC1 token here</Text>

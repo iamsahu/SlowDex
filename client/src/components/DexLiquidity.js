@@ -38,8 +38,8 @@ function DexLiquidity(params) {
 		async function GetLiquidity() {
 			const tokens = await dexInstance.methods.ReturnBalances().call();
 			const mult = await dexInstance.methods.theconstant().call();
-			console.log(tokens);
-			console.log(mult);
+			// console.log(tokens);
+			// console.log(mult);
 			var tok1 = web3.utils.fromWei(tokens[0], "ether");
 			var tok2 = web3.utils.fromWei(tokens[1], "ether");
 			setCurrentLiquidity({ tok1: tok1, tok2: tok2 });

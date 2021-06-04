@@ -37,8 +37,8 @@ function DexSwap(params) {
 		async function GetLiquidity() {
 			const tokens = await dexInstance.methods.ReturnBalances().call();
 			const mult = await dexInstance.methods.theconstant().call();
-			console.log(tokens);
-			console.log(mult);
+			// console.log(tokens);
+			// console.log(mult);
 			setCurrentLiquidity(tokens);
 			setConstant(mult);
 		}
@@ -47,7 +47,7 @@ function DexSwap(params) {
 	async function SwapPair(amount1, amount2) {
 		const depAm1 = web3.utils.toWei(amount1, "ether");
 		const depAm2 = web3.utils.toWei(String(amount2), "ether");
-		console.log(secondTokenOutput);
+		// console.log(secondTokenOutput);
 		try {
 			await local1nstance.methods.approve(dexContract.address, depAm1).send({
 				from: accounts[0],

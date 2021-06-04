@@ -9,7 +9,7 @@ import DexLiquidity from "./DexLiquidity";
 
 import { Tabs, Form, Typography, Input, Button, Checkbox } from "antd";
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { TabPane } = Tabs;
 
 function Dex(props) {
@@ -28,6 +28,7 @@ function Dex(props) {
 	};
 	return (
 		<div>
+			<Title> DEX</Title>
 			<Tabs defaultActiveKey="1" onChange={callback}>
 				<TabPane tab="Swap Token" key="1">
 					{selectedTabUI}

@@ -13,7 +13,11 @@ import Web3Context from "./context/Web3Context";
 import "./App.css";
 
 import { Layout, Menu } from "antd";
-import { AreaChartOutlined, MoneyCollectOutlined } from "@ant-design/icons";
+import {
+	AreaChartOutlined,
+	MoneyCollectOutlined,
+	HomeOutlined,
+} from "@ant-design/icons";
 import { Typography } from "antd";
 
 const { Link } = Typography;
@@ -140,74 +144,6 @@ function App() {
 		await web3.eth.getBalance(lendingContract.address).then(console.log);
 	}
 
-	async function DepositPair() {
-		const { web3, accounts } = details.current;
-		const networkId = await web3.eth.net.getId();
-		const lendingContract = LendingProtocol.networks[networkId];
-		const local1Contract = Local1.networks[networkId];
-		const local2Contract = Local2.networks[networkId];
-		const local1instance = new web3.eth.Contract(
-			Local1.abi,
-			local1Contract && local1Contract.address
-		);
-
-		const local2instance = new web3.eth.Contract(
-			Local2.abi,
-			local2Contract && local2Contract.address
-		);
-
-		const lendingInstance = new web3.eth.Contract(
-			LendingProtocol.abi,
-			lendingContract && lendingContract.address
-		);
-
-		const depAm1 = web3.utils.toWei("0.03", "ether");
-		const depAm2 = web3.utils.toWei("0.01", "ether");
-
-		try {
-			await local1instance.methods
-				.approve(lendingContract.address, depAm1)
-				.send({
-					from: accounts[0],
-					// value: web3.utils.toWei("0.5", "ether"),
-					gas: 210000,
-					gasPrice: 1000000000,
-				});
-
-			await local2instance.methods
-				.approve(lendingContract.address, depAm2)
-				.send({
-					from: accounts[0],
-					// value: web3.utils.toWei("0.5", "ether"),
-					gas: 210000,
-					gasPrice: 1000000000,
-				});
-
-			await lendingInstance.methods
-				.DepositTokens(
-					Local1.networks[networkId].address,
-					Local2.networks[networkId].address,
-					depAm1,
-					depAm2
-				)
-				.send({
-					from: accounts[0],
-					// value: web3.utils.toWei("0.5", "ether"),
-					gas: 210000,
-					gasPrice: 1000000000,
-				})
-				.on("error", function (error, receipt) {
-					// If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
-					console.log(error);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
 	async function GetBalanceToken() {
 		const { web3 } = details.current;
 		const networkId = await web3.eth.net.getId();
@@ -267,6 +203,9 @@ function App() {
 		// console.log(item);
 		switch (item.key) {
 			case "1":
+				setcurrentUI(<HomePage />);
+				break;
+			case "2":
 				setcurrentUI(<Dex />);
 				break;
 			case "3":
@@ -281,61 +220,78 @@ function App() {
 	}
 
 	return (
-		<Layout style={{ minHeight: "100vh" }}>
-			<Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+		<Layout>
+			<Header
+				className="header"
+				style={{ position: "fixed", zIndex: 1, width: "100%" }}
+			>
 				<div className="logo" />
-				<Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-					<Menu.Item key="1" icon={<AreaChartOutlined />} onClick={onItemClick}>
-						DEX
-					</Menu.Item>
-					{/* <Menu.Item key="2" icon={<DesktopOutlined />}>
+				Slow Finance
+			</Header>
+			<Content className="site-layout" style={{ marginTop: 64 }}>
+				<Layout style={{ minHeight: "92vh" }}>
+					<Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+						<div className="logo" />
+						<Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
+							<Menu.Item key="1" icon={<HomeOutlined />} onClick={onItemClick}>
+								Home
+							</Menu.Item>
+							<Menu.Item
+								key="2"
+								icon={<AreaChartOutlined />}
+								onClick={onItemClick}
+							>
+								DEX
+							</Menu.Item>
+							{/* <Menu.Item key="2" icon={<DesktopOutlined />}>
 						Option 2
 					</Menu.Item> */}
-					<SubMenu
-						key="sub1"
-						icon={<MoneyCollectOutlined />}
-						title="Lending/Borrowing"
-					>
-						<Menu.Item key="3" onClick={onItemClick}>
-							Lend
-						</Menu.Item>
-						<Menu.Item key="4" onClick={onItemClick}>
-							Borrow
-						</Menu.Item>
-						{/* <Menu.Item key="5">Alex</Menu.Item> */}
-					</SubMenu>
-					{/* <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
+							<SubMenu
+								key="sub1"
+								icon={<MoneyCollectOutlined />}
+								title="Lending/Borrowing"
+							>
+								<Menu.Item key="3" onClick={onItemClick}>
+									Lend
+								</Menu.Item>
+								<Menu.Item key="4" onClick={onItemClick}>
+									Borrow
+								</Menu.Item>
+								{/* <Menu.Item key="5">Alex</Menu.Item> */}
+							</SubMenu>
+							{/* <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
 						<Menu.Item key="6">Team 1</Menu.Item>
 						<Menu.Item key="8">Team 2</Menu.Item>
 					</SubMenu> */}
-					{/* <Menu.Item key="9" icon={<FileOutlined />}>
+							{/* <Menu.Item key="9" icon={<FileOutlined />}>
 						Files
 					</Menu.Item> */}
-				</Menu>
-			</Sider>
-			<Layout className="site-layout">
-				<Header className="site-layout-background" style={{ padding: 0 }} />
-				<Content style={{ margin: "0 16px" }}>
-					{/* <Breadcrumb style={{ margin: "16px 0" }}>
+						</Menu>
+					</Sider>
+					<Layout className="site-layout">
+						<Content style={{ margin: "0 16px" }}>
+							{/* <Breadcrumb style={{ margin: "16px 0" }}>
 						<Breadcrumb.Item>User</Breadcrumb.Item>
 						<Breadcrumb.Item>Bill</Breadcrumb.Item>
 					</Breadcrumb> */}
-					<Web3Context.Provider value={details}>
-						<div
-							className="site-layout-background"
-							style={{ padding: 24, minHeight: 360 }}
-						>
-							{currentUI}
-						</div>
-					</Web3Context.Provider>
-				</Content>
-				<Footer style={{ textAlign: "center" }}>
-					Slow Finance ©2021 Created by{" "}
-					<Link href="https://twitter.com/themystery" target="_blank">
-						Prafful Sahu
-					</Link>
-				</Footer>
-			</Layout>
+							<Web3Context.Provider value={details}>
+								<div
+									className="site-layout-background"
+									style={{ padding: 24, minHeight: 360 }}
+								>
+									{currentUI}
+								</div>
+							</Web3Context.Provider>
+						</Content>
+						<Footer style={{ textAlign: "center" }}>
+							Slow Finance ©2021 Created by{" "}
+							<Link href="https://twitter.com/themystery" target="_blank">
+								Prafful Sahu
+							</Link>
+						</Footer>
+					</Layout>
+				</Layout>
+			</Content>
 		</Layout>
 	);
 }

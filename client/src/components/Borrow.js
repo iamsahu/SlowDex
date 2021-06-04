@@ -4,7 +4,9 @@ import Local2 from "../contracts/Local2.json";
 import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Typography } from "antd";
+
+const { Title } = Typography;
 
 function Borrow(props) {
 	const details = useContext(Web3Context);
@@ -104,13 +106,13 @@ function Borrow(props) {
 
 	return (
 		<div>
+			<Title> Borrow</Title>
 			You have {accountBalance} ETH
 			<br />
 			You can borrow a max {maxBorrow} LOC1 <br />
 			You have borrowed {borrowedTillNow} LOC1 <br />
 			You have deposited {depositiedTillNow} ETH <br />
 			<Form
-				{...layout}
 				name="basic"
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
@@ -126,7 +128,7 @@ function Borrow(props) {
 				{convertedLOC1 != ""
 					? "Here is what you will receive: " + convertedLOC1
 					: ""}
-				<Form.Item {...tailLayout}>
+				<Form.Item>
 					<Button type="primary" htmlType="submit">
 						Borrow
 					</Button>
