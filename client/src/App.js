@@ -1,14 +1,28 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import Local1 from "./contracts/Local1.json";
 import Local2 from "./contracts/Local2.json";
 import SlowDex from "./contracts/SlowDex.json";
 import LendingProtocol from "./contracts/LendingProtocol.json";
 import getWeb3 from "./getWeb3";
-
+import Lend from "./components/Lend";
+import Borrow from "./components/Borrow";
+import HomePage from "./components/HomePage";
+import Web3Context from "./context/Web3Context";
 import "./App.css";
 
+import { Layout, Menu } from "antd";
+import { AreaChartOutlined, MoneyCollectOutlined } from "@ant-design/icons";
+import { Typography } from "antd";
+
+const { Link } = Typography;
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
+
 function App() {
+	const [collapsed, setCollapsed] = useState(true);
+	const [currentUI, setcurrentUI] = useState(<HomePage />);
+
 	const details = useRef({
 		storageValue: 0,
 		web3: null,
@@ -23,6 +37,7 @@ function App() {
 
 		// Get the contract instance.
 		const networkId = await web3.eth.net.getId();
+		// Web3Context = createContext({web3:web3,accounts:accounts,networkId:networkId});
 		const deployedNetwork = Local1.networks[networkId];
 		console.log(deployedNetwork.address);
 		const instance = new web3.eth.Contract(
@@ -92,23 +107,6 @@ function App() {
 		// 	.send({ from: accounts[0], gas: 4712388, gasPrice: 100000000000 });
 	}
 
-	async function FundLending() {
-		const { accounts, contract, web3 } = details.current;
-		const networkId = await web3.eth.net.getId();
-		const lendingContract = LendingProtocol.networks[networkId];
-
-		await contract.methods
-			.transfer(
-				lendingContract.address,
-				details.current.web3.utils.toWei("50", "ether")
-			)
-			.send({ from: accounts[0], gas: 210000, gasPrice: 1000000000 });
-		// const a = await contract.methods
-		// 	.balanceOf(lendingContract.address)
-		// 	.send({ from: accounts[0], gas: 21000, gasPrice: 1000000000 });
-		// console.log(a);
-	}
-
 	async function GetBalanceOf() {
 		const { accounts, contract, web3 } = details.current;
 		const networkId = await web3.eth.net.getId();
@@ -137,39 +135,6 @@ function App() {
 		// console.log(lendingContract.address);
 
 		await web3.eth.getBalance(lendingContract.address).then(console.log);
-	}
-
-	async function GiveMe() {
-		const { web3, accounts } = details.current;
-		const networkId = await web3.eth.net.getId();
-		const lendingContract = LendingProtocol.networks[networkId];
-
-		const instance = new web3.eth.Contract(
-			LendingProtocol.abi,
-			lendingContract && lendingContract.address
-		);
-		try {
-			await instance.methods
-				.LoanMe(
-					Local1.networks[networkId].address,
-					web3.utils.toWei("0.05", "ether")
-				)
-				.send({
-					from: accounts[0],
-					value: web3.utils.toWei("0.5", "ether"),
-					gas: 210000,
-					gasPrice: 1000000000,
-				})
-				.on("error", function (error, receipt) {
-					// If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
-					console.log(error);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		} catch (error) {
-			console.log(error);
-		}
 	}
 
 	async function DepositPair() {
@@ -267,28 +232,108 @@ function App() {
 		// await web3.eth.getBalance(lendingContract.address).then(console.log);
 	}
 
-	return (
-		<div className="App">
-			<h1>Good to Go!</h1>
-			<p>Your Truffle Box is installed and ready.</p>
-			<h2>Smart Contract Example</h2>
-			<p>
-				If your contracts compiled and migrated successfully, below will show a
-				stored value of 5 (by default).
-			</p>
-			<p>
-				Try changing the value stored on <strong>line 40</strong> of App.js.
-			</p>
+	// return (
+	// 	<div className="App">
+	// 		<h1>Good to Go!</h1>
+	// 		<p>Your Truffle Box is installed and ready.</p>
+	// 		<h2>Smart Contract Example</h2>
+	// 		<p>
+	// 			If your contracts compiled and migrated successfully, below will show a
+	// 			stored value of 5 (by default).
+	// 		</p>
+	// 		<p>
+	// 			Try changing the value stored on <strong>line 40</strong> of App.js.
+	// 		</p>
 
-			<button onClick={runExample}>Transfer Loc1</button>
-			<button onClick={runExample2}>DEX Transfer</button>
-			<button onClick={FundLending}>Fund Lending</button>
-			<button onClick={GiveMe}>Give Me</button>
-			<button onClick={GetBalanceOf}>GetBalanceOf</button>
-			<button onClick={GetBalanceC}>GetBalanceC</button>
-			<button onClick={DepositPair}>DepositPair</button>
-			<button onClick={GetBalanceToken}>GetBalanceToken</button>
-		</div>
+	// 		<button onClick={runExample}>Transfer Loc1</button>
+	// 		<button onClick={runExample2}>DEX Transfer</button>
+	// 		<button onClick={FundLending}>Fund Lending</button>
+	// 		<button onClick={GiveMe}>Give Me</button>
+	// 		<button onClick={GetBalanceOf}>GetBalanceOf</button>
+	// 		<button onClick={GetBalanceC}>GetBalanceC</button>
+	// 		<button onClick={DepositPair}>DepositPair</button>
+	// 		<button onClick={GetBalanceToken}>GetBalanceToken</button>
+	// 	</div>
+	// );
+
+	function onCollapse(collapse) {
+		setCollapsed(collapse);
+	}
+
+	function onItemClick(item) {
+		console.log(item);
+		switch (item.key) {
+			case "1":
+				setcurrentUI("Dex");
+				break;
+			case "3":
+				setcurrentUI(<Lend />);
+				break;
+			case "4":
+				setcurrentUI(<Borrow />);
+				break;
+			default:
+				break;
+		}
+	}
+
+	return (
+		<Layout style={{ minHeight: "100vh" }}>
+			<Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+				<div className="logo" />
+				<Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+					<Menu.Item key="1" icon={<AreaChartOutlined />} onClick={onItemClick}>
+						DEX
+					</Menu.Item>
+					{/* <Menu.Item key="2" icon={<DesktopOutlined />}>
+						Option 2
+					</Menu.Item> */}
+					<SubMenu
+						key="sub1"
+						icon={<MoneyCollectOutlined />}
+						title="Lending/Borrowing"
+					>
+						<Menu.Item key="3" onClick={onItemClick}>
+							Lend
+						</Menu.Item>
+						<Menu.Item key="4" onClick={onItemClick}>
+							Borrow
+						</Menu.Item>
+						{/* <Menu.Item key="5">Alex</Menu.Item> */}
+					</SubMenu>
+					{/* <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
+						<Menu.Item key="6">Team 1</Menu.Item>
+						<Menu.Item key="8">Team 2</Menu.Item>
+					</SubMenu> */}
+					{/* <Menu.Item key="9" icon={<FileOutlined />}>
+						Files
+					</Menu.Item> */}
+				</Menu>
+			</Sider>
+			<Layout className="site-layout">
+				<Header className="site-layout-background" style={{ padding: 0 }} />
+				<Content style={{ margin: "0 16px" }}>
+					{/* <Breadcrumb style={{ margin: "16px 0" }}>
+						<Breadcrumb.Item>User</Breadcrumb.Item>
+						<Breadcrumb.Item>Bill</Breadcrumb.Item>
+					</Breadcrumb> */}
+					<Web3Context.Provider value={details}>
+						<div
+							className="site-layout-background"
+							style={{ padding: 24, minHeight: 360 }}
+						>
+							{currentUI}
+						</div>
+					</Web3Context.Provider>
+				</Content>
+				<Footer style={{ textAlign: "center" }}>
+					Slow Finance ©2021 Created by{" "}
+					<Link href="https://twitter.com/themystery" target="_blank">
+						Prafful Sahu
+					</Link>
+				</Footer>
+			</Layout>
+		</Layout>
 	);
 }
 
