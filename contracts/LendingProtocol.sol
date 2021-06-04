@@ -4,6 +4,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract LendingProtocol {
     address owner;
+    mapping(address => uint256) public deposits;
+    mapping(address => uint256) public borrows;
+    mapping(address => uint256) public amountLent;
+    uint256 amountToLend;
 
     constructor() {
         owner = msg.sender;
@@ -22,7 +26,27 @@ contract LendingProtocol {
             "Balance is not sufficient"
         );
         token.transfer(msg.sender, msg.value / 2);
+        deposits[msg.sender] += msg.value;
+        borrows[msg.sender] += msg.value / 2;
         emit AmountReceived(msg.sender, msg.value);
+    }
+
+    function MyDeposits() public returns (uint256) {
+        return deposits[msg.sender];
+    }
+
+    function MyBorrows() public returns (uint256) {
+        return borrows[msg.sender];
+    }
+
+    function AcceptTokensToLend(address token, uint256 amount) public {
+        ERC20 tokenC = ERC20(token);
+        uint256 availableAllowance =
+            tokenC.allowance(msg.sender, address(this));
+        requires(availableAllowance >= amount, "Not enough allowance!");
+        tokenC.transferFrom(msg.sender, address(this), amount);
+        amountToLend += amount;
+        amountLent[msg.sender] += amount;
     }
 
     function DepositTokens(

@@ -28,6 +28,7 @@ function App() {
 		web3: null,
 		accounts: null,
 		contract: null,
+		networkId: null,
 	});
 	async function setup() {
 		const web3 = await getWeb3();
@@ -47,6 +48,7 @@ function App() {
 		details.current.web3 = web3;
 		details.current.contract = instance;
 		details.current.accounts = accounts;
+		details.current.networkId = networkId;
 		details.current.storageValue = 1;
 	}
 	useEffect(() => {
