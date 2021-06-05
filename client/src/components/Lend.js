@@ -6,7 +6,7 @@ import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
 
 import Withdraw from "./Withdraw";
-import { Tabs, Form, Layout, Typography, Input, Button } from "antd";
+import { Tabs, Form, Layout, Typography, Input, Button, Divider } from "antd";
 const { Content } = Layout;
 const { Text, Title } = Typography;
 const { TabPane } = Tabs;
@@ -101,9 +101,13 @@ function Lend(props) {
 						</Form.Item>
 					</Form>
 					<Text>{lendingStatus}</Text>
+					<Divider />
+					<Text>You can lend tokens here.</Text>
 				</TabPane>
 				<TabPane tab="Withdraw" key="2">
 					<Withdraw />
+					<Divider />
+					<Text>You can withdraw the funds you had lent.</Text>
 				</TabPane>
 			</Tabs>
 

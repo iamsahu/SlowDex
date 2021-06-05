@@ -4,9 +4,9 @@ import Local2 from "../contracts/Local2.json";
 import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
-import { Button, Form, Input, Typography, Layout } from "antd";
+import { Button, Form, Input, Typography, Layout, Divider } from "antd";
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function Borrow(props) {
 	const details = useContext(Web3Context);
@@ -99,7 +99,7 @@ function Borrow(props) {
 		for (let index = 0; index < changedFields.length; index++) {
 			const element = changedFields[index];
 			if (element.name[0] == "borrowAmount") {
-				setConvertedLOC1(parseInt(element.value) / 2);
+				setConvertedLOC1(parseInt(element.value) * 2);
 			}
 		}
 	};
@@ -128,7 +128,7 @@ function Borrow(props) {
 					<Input />
 				</Form.Item>
 				{convertedLOC1 != ""
-					? "Here is what you will receive: " + convertedLOC1
+					? "Here is what you will have to deposit: " + convertedLOC1 + " ETH"
 					: ""}
 				<Form.Item>
 					<Button type="primary" htmlType="submit">
@@ -138,6 +138,12 @@ function Borrow(props) {
 			</Form>
 			<br />
 			{borrowStatus == "" ? "" : "You successfully borrowed!"}
+			<Divider />
+			<Text>
+				You can borrow tokens by depositing ETH as a collateral.
+				<br />
+				Collateralization of 200% is required.
+			</Text>
 		</Content>
 	);
 }

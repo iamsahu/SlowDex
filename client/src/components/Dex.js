@@ -7,7 +7,7 @@ import Web3Context from "../context/Web3Context";
 import DexSwap from "./DexSwap";
 import DexLiquidity from "./DexLiquidity";
 
-import { Tabs, Typography, Layout } from "antd";
+import { Tabs, Typography, Layout, Divider } from "antd";
 const { Content } = Layout;
 const { Text, Title } = Typography;
 const { TabPane } = Tabs;
@@ -34,9 +34,23 @@ function Dex(props) {
 			<Tabs defaultActiveKey="1" onChange={callback}>
 				<TabPane tab="Swap Token" key="1">
 					{selectedTabUI}
+					<Divider />
+					<Text>
+						Simple DEX is a AMM. It relies on constant product formula (k = x*y)
+						to determine the asset prices.
+						<br />
+						This example shows how you can swap one token with another.
+					</Text>
 				</TabPane>
 				<TabPane tab="Add Liquidity" key="2">
 					{selectedTabUI}
+					<Divider />
+					<Text>
+						You can create a liquidity pool by depositing 2 types of tokens. The
+						ratio in which they are added would play a role in determining the
+						prices of swap.
+						<br />
+					</Text>
 				</TabPane>
 			</Tabs>
 		</Content>

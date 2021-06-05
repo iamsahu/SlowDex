@@ -9,6 +9,7 @@ contract SlowDex {
     uint256 public loc1Token;
     uint256 public loc2Token;
     uint256 public theconstant;
+    address slw;
 
     event SuccessfulSwap(address, uint256, address, uint256);
     event AmountDeposited(uint256, uint256);
@@ -50,5 +51,9 @@ contract SlowDex {
         loc1Token += amount1;
         loc2Token -= amount2;
         emit SuccessfulSwap(token1, amount1, token2, amount2);
+    }
+
+    function SetSlw(address sl) public {
+        slw = sl;
     }
 }

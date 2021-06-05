@@ -224,9 +224,7 @@ function App() {
 			<Header
 				className="header"
 				style={{ position: "fixed", zIndex: 1, width: "100%" }}
-			>
-				<Title>Slow Finance</Title>
-			</Header>
+			></Header>
 			<Content className="site-layout" style={{ marginTop: 64 }}>
 				<Layout style={{ minHeight: "92vh" }}>
 					<Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
