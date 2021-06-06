@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Local1 from "../contracts/Local1.json";
-import Local2 from "../contracts/Local2.json";
-import SlowDex from "../contracts/SlowDex.json";
+// import Local2 from "../contracts/Local2.json";
+// import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
 
@@ -57,14 +57,6 @@ function Lend(props) {
 				console.log(error);
 			});
 	}
-
-	const layout = {
-		labelCol: { span: 8 },
-		wrapperCol: { span: 16 },
-	};
-	const tailLayout = {
-		wrapperCol: { offset: 8, span: 16 },
-	};
 
 	const onLend = async (values) => {
 		await FundLending(values.lendAmount);

@@ -12562,12 +12562,57 @@
         }
       },
       "links": {},
-      "address": "0x86540fdBB8807cfC4E2e9b300d8e5d67B8754FD3",
-      "transactionHash": "0x4dc75c14af5999906c3b60db55ab1683ea0551265a70b4d1883c706d4fe08a8c"
+      "address": "0x86a86C8C2c089E5E159836f8B69FCc6b0c9B1404",
+      "transactionHash": "0xa194eb3e45521363ef478ef26844faf013c2a5c6137a04fc26de99b13524beb2"
+    },
+    "80001": {
+      "events": {
+        "0xff1cd8b4b2d7eb91e1865ab62aeade09b1e481e6f69c302aabe310523d13250e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "winner",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "AmountDeposited",
+          "type": "event"
+        },
+        "0x0036624afd4ac14e2ebe9b68a6ec0c6e4f6bf5bde2999a61e1fec085ca86697d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "winner",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "AmountReceived",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xEf80Ddbb0Acd5b35b3A3D4De7D2b54cf36A30419",
+      "transactionHash": "0x1acca1d2891d044e56f7eee374ec1ed7b36b9b4a807540a413db6ed14b700772"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-06-04T13:59:34.639Z",
+  "updatedAt": "2021-06-06T10:32:17.711Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

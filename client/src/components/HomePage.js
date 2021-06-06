@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Divider, Layout, Button } from "antd";
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title, Text } = Typography;
 function HomePage() {
 	return (

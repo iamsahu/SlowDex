@@ -62,7 +62,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -75,7 +76,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -88,7 +90,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -101,7 +104,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -10077,12 +10081,70 @@
         }
       },
       "links": {},
-      "address": "0x9611a24c5f3FcD42d3a02eD9448899c86293AAc9",
-      "transactionHash": "0x02ce1e5e6ec1cd2ff7636b6ed7350ef204e420ccae0d7c3b573131cdccf60e8d"
+      "address": "0x2D679A8a35E8741152e350397561E3B0C69BA8e3",
+      "transactionHash": "0xe33c5c4e576aa95f3140d2891a70ead70d9276bfce2403d34546086a124d8c3d"
+    },
+    "80001": {
+      "events": {
+        "0xff1cd8b4b2d7eb91e1865ab62aeade09b1e481e6f69c302aabe310523d13250e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "AmountDeposited",
+          "type": "event"
+        },
+        "0x1791d7d669bf34a0f64c4ef7a20de22b49f0b329a5a2c3442797c6bf6b2dc407": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "SuccessfulSwap",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x66578D3815201Ca6A794CFd6375d50bC88c5F54D",
+      "transactionHash": "0x6859fcf21bebb0d78981db0057fd8a1401b7677f8a4525e9856caa8a0f9b967f"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-06-04T16:58:35.505Z",
+  "updatedAt": "2021-06-06T10:31:51.863Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

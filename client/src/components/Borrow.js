@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Local1 from "../contracts/Local1.json";
-import Local2 from "../contracts/Local2.json";
-import SlowDex from "../contracts/SlowDex.json";
+// import Local2 from "../contracts/Local2.json";
+// import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
 import { Button, Form, Input, Typography, Layout, Divider } from "antd";
@@ -38,7 +38,7 @@ function Borrow(props) {
 			setDepositiedTillNow(web3.utils.fromWei(bal, "ether"));
 			setBorrowedTillNow(web3.utils.fromWei(bal2, "ether"));
 		}
-		if (accountBalance == "") {
+		if (accountBalance === "") {
 			GetBalance();
 		}
 	}, [details.current.accounts]);
@@ -79,14 +79,6 @@ function Borrow(props) {
 		}
 	}
 
-	const layout = {
-		labelCol: { span: 8 },
-		wrapperCol: { span: 16 },
-	};
-	const tailLayout = {
-		wrapperCol: { offset: 8, span: 16 },
-	};
-
 	const onFinish = async (values) => {
 		await Borrow(values.borrowAmount);
 	};
@@ -98,7 +90,7 @@ function Borrow(props) {
 	const onValuesChange = (changedFields, allFields) => {
 		for (let index = 0; index < changedFields.length; index++) {
 			const element = changedFields[index];
-			if (element.name[0] == "borrowAmount") {
+			if (element.name[0] === "borrowAmount") {
 				setConvertedLOC1(parseInt(element.value) * 2);
 			}
 		}
@@ -127,7 +119,7 @@ function Borrow(props) {
 				>
 					<Input />
 				</Form.Item>
-				{convertedLOC1 != ""
+				{convertedLOC1 !== ""
 					? "Here is what you will have to deposit: " + convertedLOC1 + " ETH"
 					: ""}
 				<Form.Item>
@@ -137,7 +129,7 @@ function Borrow(props) {
 				</Form.Item>
 			</Form>
 			<br />
-			{borrowStatus == "" ? "" : "You successfully borrowed!"}
+			{borrowStatus === "" ? "" : "You successfully borrowed!"}
 			<Divider />
 			<Text>
 				You can borrow tokens by depositing ETH as a collateral.

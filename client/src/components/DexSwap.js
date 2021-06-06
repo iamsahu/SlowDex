@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 function DexSwap(params) {
 	const details = useContext(Web3Context);
-	const { accounts, contract, web3 } = details.current;
+	const { accounts, web3 } = details.current;
 	const [currentLiquidity, setCurrentLiquidity] = useState("");
 	const [constant, setConstant] = useState("");
 	const [secondTokenOutput, setSecondTokenOutput] = useState("");
@@ -17,16 +17,16 @@ function DexSwap(params) {
 	const networkId = details.current.networkId;
 	const dexContract = SlowDex.networks[networkId];
 	const local1Contract = Local1.networks[networkId];
-	const local2Contract = Local2.networks[networkId];
+	// const local2Contract = Local2.networks[networkId];
 	const local1nstance = new web3.eth.Contract(
 		Local1.abi,
 		local1Contract && local1Contract.address
 	);
 
-	const local2instance = new web3.eth.Contract(
-		Local2.abi,
-		local2Contract && local2Contract.address
-	);
+	// const local2instance = new web3.eth.Contract(
+	// 	Local2.abi,
+	// 	local2Contract && local2Contract.address
+	// );
 
 	const dexInstance = new web3.eth.Contract(
 		SlowDex.abi,
@@ -92,8 +92,8 @@ function DexSwap(params) {
 	const onValuesChange = (changedFields, allFields) => {
 		for (let index = 0; index < changedFields.length; index++) {
 			const element = changedFields[index];
-			if (element.name[0] == "token1Amount") {
-				const theconstant = web3.utils.fromWei(constant, "ether");
+			if (element.name[0] === "token1Amount") {
+				// const theconstant = web3.utils.fromWei(constant, "ether");
 				var tok1 = web3.utils.fromWei(currentLiquidity[0], "ether");
 				var tok2 = web3.utils.fromWei(currentLiquidity[1], "ether");
 				console.log("tok1: " + tok1);
@@ -125,7 +125,7 @@ function DexSwap(params) {
 				>
 					<Input />
 				</Form.Item>
-				{secondTokenOutput == ""
+				{secondTokenOutput === ""
 					? ""
 					: "You will get " + secondTokenOutput + " LOC2"}
 				<Form.Item>

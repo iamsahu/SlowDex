@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Local1 from "../contracts/Local1.json";
-import Local2 from "../contracts/Local2.json";
-import SlowDex from "../contracts/SlowDex.json";
+// import Local2 from "../contracts/Local2.json";
+// import SlowDex from "../contracts/SlowDex.json";
 import LendingProtocol from "../contracts/LendingProtocol.json";
 import Web3Context from "../context/Web3Context";
 import { Form, Typography, Input, Button } from "antd";
@@ -12,7 +12,7 @@ function Withdraw(props) {
 	const [withdrawStatus, setwithdrawStatus] = useState("");
 	const [amountLent, setAmountLent] = useState("");
 	const details = useContext(Web3Context);
-	const { accounts, contract, web3 } = details.current;
+	const { accounts, web3 } = details.current;
 
 	const lendingContract = LendingProtocol.networks[details.current.networkId];
 	const lendingInstance = new web3.eth.Contract(
@@ -71,9 +71,6 @@ function Withdraw(props) {
 		console.log("Failed:", errorInfo);
 	};
 
-	function callback(key) {
-		console.log(key);
-	}
 	return (
 		<div>
 			<Text>Withdraw your LOC1 token</Text>

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@truffle/hdwallet-provider": "^1.4.0",
     "@uniswap/lib": "^4.0.1-alpha"
   }
 }

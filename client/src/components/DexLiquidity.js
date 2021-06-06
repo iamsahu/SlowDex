@@ -9,7 +9,7 @@ const { Text } = Typography;
 
 function DexLiquidity(params) {
 	const details = useContext(Web3Context);
-	const { accounts, contract, web3 } = details.current;
+	const { accounts, web3 } = details.current;
 	const [currentLiquidity, setCurrentLiquidity] = useState({
 		tok1: "",
 		tok2: "",
@@ -37,7 +37,7 @@ function DexLiquidity(params) {
 	useEffect(() => {
 		async function GetLiquidity() {
 			const tokens = await dexInstance.methods.ReturnBalances().call();
-			const mult = await dexInstance.methods.theconstant().call();
+			// const mult = await dexInstance.methods.theconstant().call();
 			// console.log(tokens);
 			// console.log(mult);
 			var tok1 = web3.utils.fromWei(tokens[0], "ether");
